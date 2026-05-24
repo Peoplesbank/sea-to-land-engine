@@ -7,7 +7,10 @@ import recordsData from "@/data/records.json";
 import parcelsData from "@/data/parcels.json";
 import routesData from "@/data/routes.json";
 import sourcesData from "@/data/sources.json";
-import {
+import
+import registriesData from "@/data/registries.json"; 
+
+{
   Search,
   Database,
   Map,
@@ -26,6 +29,7 @@ const database = {
   parcels: parcelsData as any[],
   routes: routesData as any[],
   sources: sourcesData as any[],
+  registries: registriesData as any[],
 };
 
 type SearchItem = any & {
@@ -60,7 +64,7 @@ export default function Page() {
       ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
       ...database.routes.map((item) => ({ ...item, category: "Route" })),
       ...database.sources.map((item) => ({ ...item, category: "Source" })),
-    ];
+      ...database.registries.map((item) => ({ ...item, category: "Registry" })),
 
     const q = query.toLowerCase().trim();
     if (!q) return combined;
@@ -219,6 +223,7 @@ export default function Page() {
           <Stat icon={<Route />} label="Routes" value={database.routes.length} />
           <Stat icon={<Archive />} label="Sources" value={database.sources.length} />
         </div>
+	<Stat icon={<Archive />} label="Registries" value={database.registries.length} />
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_420px]">
           <section>
@@ -289,6 +294,39 @@ function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
           Proof Status: {item.status}
         </div>
       )}
+       
+      <section className="mt-10 rounded-2xl border border-cyan-400/30 bg-slate-900 p-6">
+  <h2 className="text-2xl font-bold text-cyan-300">
+    Public Research Links
+  </h2>
+
+  <p className="mt-2 text-slate-300">
+    These are outside research doors: registries, archives, libraries, land titles,
+    newspapers, FamilySearch, WikiTree, and government records. They are separate
+    from My Archive Only.
+  </p>
+
+  <div className="mt-6 grid gap-4 md:grid-cols-2">
+    {database.registries.map((registry) => (
+      <div
+        key={registry.id}
+        className="rounded-2xl border border-white/10 bg-slate-950 p-5"
+      >
+        <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
+          {registry.category}
+        </div>
+
+        <h3 className="mt-2 text-lg font-bold">{registry.name}</h3>
+
+        <p className="mt-2 text-sm text-slate-300">{registry.use}</p>
+
+        <p className="mt-3 text-sm text-amber-300">
+          Status: {registry.status}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
 
       <TrailList title="Linked People" items={trail.people} />
       <TrailList title="Linked Places" items={trail.places} />
