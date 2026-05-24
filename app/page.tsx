@@ -7,45 +7,178 @@ import recordsData from "@/data/records.json";
 import parcelsData from "@/data/parcels.json";
 import routesData from "@/data/routes.json";
 import sourcesData from "@/data/sources.json";
-import { Search, Database, Map, Users, FileText, Globe2 } from "lucide-react";
+import {
+  Search,
+  Database,
+  Map,
+  Users,
+  FileText,
+  Globe2,
+  Link2,
+  Route,
+  Archive,
+} from "lucide-react";
 
 const database = {
-  people: peopleData,
-  places: placesData,
-  records: recordsData,
-  parcels: parcelsData,
-  routes: routesData,
-  sources: sourcesData,
+  people: peopleData as any[],
+  places: placesData as any[],
+  records: recordsData as any[],
+  parcels: parcelsData as any[],
+  routes: routesData as any[],
+  sources: sourcesData as any[],
 };
+
+type SearchItem = any & {
+  category: string;
+};
+
+function textOf(item: any) {
+  return JSON.stringify(item).toLowerCase();
+}
+
+function titleOf(item: SearchItem) {
+  return item.name || item.title || item.legal || item.id || "Untitled";
+}
+
+function statusOf(item: SearchItem) {
+  return item.status || item.type || item.notes || "Sea-to-Land Engine data record";
+}
+
+function findById(list: any[], id: string) {
+  return list.find((item) => item.id === id);
+}
 
 export default function Page() {
   const [query, setQuery] = useState("");
-
-  const people = database.people as any[];
-  const places = database.places as any[];
-  const records = database.records as any[];
-  const parcels = database.parcels as any[];
-  const routes = database.routes as any[];
-  const sources = database.sources as any[];
+  const [selected, setSelected] = useState<SearchItem | null>(null);
 
   const allResults = useMemo(() => {
-    const combined = [
-      ...people.map((item) => ({ ...item, category: "Person" })),
-      ...places.map((item) => ({ ...item, category: "Place" })),
-      ...records.map((item) => ({ ...item, category: "Record" })),
-      ...parcels.map((item) => ({ ...item, category: "Parcel" })),
-      ...routes.map((item) => ({ ...item, category: "Route" })),
-      ...sources.map((item) => ({ ...item, category: "Source" })),
+    const combined: SearchItem[] = [
+      ...database.people.map((item) => ({ ...item, category: "Person" })),
+      ...database.places.map((item) => ({ ...item, category: "Place" })),
+      ...database.records.map((item) => ({ ...item, category: "Record" })),
+      ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
+      ...database.routes.map((item) => ({ ...item, category: "Route" })),
+      ...database.sources.map((item) => ({ ...item, category: "Source" })),
     ];
 
     const q = query.toLowerCase().trim();
-
     if (!q) return combined;
 
-    return combined.filter((item) =>
-      JSON.stringify(item).toLowerCase().includes(q)
-    );
-  }, [query, people, places, records, parcels, routes, sources]);
+    return combined.filter((item) => textOf(item).includes(q));
+  }, [query]);
+
+  const activeItem = selected || allResults[0] || null;
+
+  const proofTrail = useMemo(() => {
+    if (!activeItem) {
+      return {
+        people: [],
+        places: [],
+        parcels: [],
+        records: [],
+        routes: [],
+        sources: [],
+      };
+    }
+
+    const people = new Set<any>();
+    const places = new Set<any>();
+    const parcels = new Set<any>();
+    const records = new Set<any>();
+    const routes = new Set<any>();
+    const sources = new Set<any>();
+
+    if (activeItem.category === "Person") {
+      people.add(activeItem);
+
+      database.records.forEach((record) => {
+        if ((record.people || []).includes(activeItem.id)) records.add(record);
+      });
+
+      database.parcels.forEach((parcel) => {
+        if (parcel.person === activeItem.id) parcels.add(parcel);
+      });
+    }
+
+    if (activeItem.category === "Place") {
+      places.add(activeItem);
+
+      database.records.forEach((record) => {
+        if ((record.places || []).includes(activeItem.id)) records.add(record);
+      });
+    }
+
+    if (activeItem.category === "Record") {
+      records.add(activeItem);
+
+      (activeItem.people || []).forEach((id: string) => {
+        const item = findById(database.people, id);
+        if (item) people.add(item);
+      });
+
+      (activeItem.places || []).forEach((id: string) => {
+        const item = findById(database.places, id);
+        if (item) places.add(item);
+      });
+
+      (activeItem.parcels || []).forEach((id: string) => {
+        const item = findById(database.parcels, id);
+        if (item) parcels.add(item);
+      });
+    }
+
+    if (activeItem.category === "Parcel") {
+      parcels.add(activeItem);
+
+      const person = findById(database.people, activeItem.person);
+      if (person) people.add(person);
+
+      database.records.forEach((record) => {
+        if ((record.parcels || []).includes(activeItem.id)) records.add(record);
+      });
+    }
+
+    if (activeItem.category === "Route") {
+      routes.add(activeItem);
+      database.places.forEach((place) => {
+        if ((activeItem.path || []).some((point: string) => place.name.includes(point) || point.includes(place.name))) {
+          places.add(place);
+        }
+      });
+    }
+
+    if (activeItem.category === "Source") {
+      sources.add(activeItem);
+      database.records.forEach((record) => records.add(record));
+    }
+
+    Array.from(records).forEach((record: any) => {
+      (record.people || []).forEach((id: string) => {
+        const item = findById(database.people, id);
+        if (item) people.add(item);
+      });
+
+      (record.places || []).forEach((id: string) => {
+        const item = findById(database.places, id);
+        if (item) places.add(item);
+      });
+
+      (record.parcels || []).forEach((id: string) => {
+        const item = findById(database.parcels, id);
+        if (item) parcels.add(item);
+      });
+    });
+
+    return {
+      people: Array.from(people),
+      places: Array.from(places),
+      parcels: Array.from(parcels),
+      records: Array.from(records),
+      routes: Array.from(routes),
+      sources: Array.from(sources),
+    };
+  }, [activeItem]);
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -79,52 +212,109 @@ export default function Page() {
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
-          <Stat icon={<Users />} label="People" value={people.length} />
-          <Stat icon={<Map />} label="Places" value={places.length} />
-          <Stat icon={<FileText />} label="Records" value={records.length} />
-          <Stat icon={<Database />} label="Parcels" value={parcels.length} />
-          <Stat icon={<Globe2 />} label="Routes" value={routes.length} />
-          <Stat icon={<Search />} label="Sources" value={sources.length} />
+          <Stat icon={<Users />} label="People" value={database.people.length} />
+          <Stat icon={<Map />} label="Places" value={database.places.length} />
+          <Stat icon={<FileText />} label="Records" value={database.records.length} />
+          <Stat icon={<Database />} label="Parcels" value={database.parcels.length} />
+          <Stat icon={<Route />} label="Routes" value={database.routes.length} />
+          <Stat icon={<Archive />} label="Sources" value={database.sources.length} />
         </div>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-bold">Search Results</h2>
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_420px]">
+          <section>
+            <h2 className="text-2xl font-bold">Search Results</h2>
 
-          <div className="mt-5 grid gap-4">
-            {allResults.map((item, index) => (
-              <div
-                key={`${item.category}-${item.id || index}`}
-                className="rounded-2xl border border-white/10 bg-slate-900 p-5"
-              >
-                <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
-                  {item.category}
+            <div className="mt-5 grid gap-4">
+              {allResults.map((item, index) => (
+                <button
+                  key={`${item.category}-${item.id || index}`}
+                  onClick={() => setSelected(item)}
+                  className={`rounded-2xl border p-5 text-left transition ${
+                    activeItem?.id === item.id && activeItem?.category === item.category
+                      ? "border-cyan-300 bg-cyan-400/10"
+                      : "border-white/10 bg-slate-900 hover:border-cyan-400/50"
+                  }`}
+                >
+                  <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
+                    {item.category}
+                  </div>
+
+                  <h3 className="mt-2 text-xl font-bold">{titleOf(item)}</h3>
+
+                  <p className="mt-2 text-slate-300">{item.type || item.notes || statusOf(item)}</p>
+
+                  {item.status && (
+                    <p className="mt-3 text-sm text-amber-300">Status: {item.status}</p>
+                  )}
+                </button>
+              ))}
+
+              {allResults.length === 0 && (
+                <div className="rounded-2xl border border-white/10 bg-slate-900 p-5 text-slate-400">
+                  No matching records yet.
                 </div>
+              )}
+            </div>
+          </section>
 
-                <h3 className="mt-2 text-xl font-bold">
-                  {item.name || item.title || item.legal || item.id || "Untitled"}
-                </h3>
-
-                <p className="mt-2 text-slate-300">
-                  {item.type || item.status || item.notes || "Sea-to-Land Engine data record"}
-                </p>
-
-                {item.status && (
-                  <p className="mt-3 text-sm text-amber-300">
-                    Status: {item.status}
-                  </p>
-                )}
-              </div>
-            ))}
-
-            {allResults.length === 0 && (
-              <div className="rounded-2xl border border-white/10 bg-slate-900 p-5 text-slate-400">
-                No matching records yet.
-              </div>
-            )}
-          </div>
-        </section>
+          <ProofTrail item={activeItem} trail={proofTrail} />
+        </div>
       </section>
     </main>
+  );
+}
+
+function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
+  if (!item) {
+    return (
+      <aside className="rounded-2xl border border-white/10 bg-slate-900 p-6">
+        <h2 className="text-2xl font-bold">Proof Trail</h2>
+        <p className="mt-3 text-slate-400">Select a result to see connected evidence.</p>
+      </aside>
+    );
+  }
+
+  return (
+    <aside className="h-fit rounded-2xl border border-cyan-400/30 bg-slate-900 p-6">
+      <div className="flex items-center gap-2 text-cyan-300">
+        <Link2 className="h-5 w-5" />
+        <span className="text-sm font-bold uppercase tracking-widest">Proof Trail</span>
+      </div>
+
+      <h2 className="mt-3 text-2xl font-bold">{titleOf(item)}</h2>
+      <p className="mt-2 text-sm text-slate-300">{statusOf(item)}</p>
+
+      {item.status && (
+        <div className="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-3 text-sm text-amber-200">
+          Proof Status: {item.status}
+        </div>
+      )}
+
+      <TrailList title="Linked People" items={trail.people} />
+      <TrailList title="Linked Places" items={trail.places} />
+      <TrailList title="Linked Parcels" items={trail.parcels} />
+      <TrailList title="Linked Records" items={trail.records} />
+      <TrailList title="Linked Routes" items={trail.routes} />
+      <TrailList title="Linked Sources" items={trail.sources} />
+    </aside>
+  );
+}
+
+function TrailList({ title, items }: { title: string; items: any[] }) {
+  return (
+    <div className="mt-5 rounded-xl border border-white/10 bg-slate-950 p-4">
+      <div className="font-semibold text-cyan-300">{title}</div>
+
+      {items.length ? (
+        <ul className="mt-3 space-y-2 text-sm text-slate-300">
+          {items.map((item, index) => (
+            <li key={item.id || index}>• {item.name || item.title || item.legal || item.id}</li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-2 text-sm text-slate-500">No links yet.</p>
+      )}
+    </div>
   );
 }
 
