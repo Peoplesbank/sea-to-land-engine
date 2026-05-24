@@ -300,37 +300,37 @@ function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
       )}
        
       <section className="mt-10 rounded-2xl border border-cyan-400/30 bg-slate-900 p-6">
-  <h2 className="text-2xl font-bold text-cyan-300">
-    Public Research Links
-  </h2>
+          <h2 className="text-2xl font-bold text-cyan-300">
+            Public Research Links
+          </h2>
 
-  <p className="mt-2 text-slate-300">
-    These are outside research doors: registries, archives, libraries, land titles,
-    newspapers, FamilySearch, WikiTree, and government records. They are separate
-    from My Archive Only.
-  </p>
+          <p className="mt-2 text-slate-300">
+            These are outside research doors: registries, archives, libraries,
+            land titles, newspapers, FamilySearch, WikiTree, and government
+            records. They are separate from My Archive Only.
+          </p>
 
-  <div className="mt-6 grid gap-4 md:grid-cols-2">
-    {database.registries.map((registry) => (
-      <div
-        key={registry.id}
-        className="rounded-2xl border border-white/10 bg-slate-950 p-5"
-      >
-        <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
-          {registry.category}
-        </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {database.registries.map((registry) => (
+              <div
+                key={registry.id}
+                className="rounded-2xl border border-white/10 bg-slate-950 p-5"
+              >
+                <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
+                  {registry.category}
+                </div>
 
-        <h3 className="mt-2 text-lg font-bold">{registry.name}</h3>
+                <h3 className="mt-2 text-lg font-bold">{registry.name}</h3>
 
-        <p className="mt-2 text-sm text-slate-300">{registry.use}</p>
+                <p className="mt-2 text-sm text-slate-300">{registry.use}</p>
 
-        <p className="mt-3 text-sm text-amber-300">
-          Status: {registry.status}
-        </p>
-      </div>
-    ))}
-  </div>
-</section>
+                <p className="mt-3 text-sm text-amber-300">
+                  Status: {registry.status}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
 
       <TrailList title="Linked People" items={trail.people} />
       <TrailList title="Linked Places" items={trail.places} />
