@@ -7,10 +7,9 @@ import recordsData from "@/data/records.json";
 import parcelsData from "@/data/parcels.json";
 import routesData from "@/data/routes.json";
 import sourcesData from "@/data/sources.json";
-import
 import registriesData from "@/data/registries.json"; 
 
-{
+import {
   Search,
   Database,
   Map,
@@ -56,21 +55,23 @@ export default function Page() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<SearchItem | null>(null);
 
-  const allResults = useMemo(() => {
-    const combined: SearchItem[] = [
-      ...database.people.map((item) => ({ ...item, category: "Person" })),
-      ...database.places.map((item) => ({ ...item, category: "Place" })),
-      ...database.records.map((item) => ({ ...item, category: "Record" })),
-      ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
-      ...database.routes.map((item) => ({ ...item, category: "Route" })),
-      ...database.sources.map((item) => ({ ...item, category: "Source" })),
-      ...database.registries.map((item) => ({ ...item, category: "Registry" })),
+ const allResults = useMemo(() => {
+  const combined: SearchItem[] = [
+    ...database.people.map((item) => ({ ...item, category: "Person" })),
+    ...database.places.map((item) => ({ ...item, category: "Place" })),
+    ...database.records.map((item) => ({ ...item, category: "Record" })),
+    ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
+    ...database.routes.map((item) => ({ ...item, category: "Route" })),
+    ...database.sources.map((item) => ({ ...item, category: "Source" })),
+    ...database.registries.map((item) => ({ ...item, category: "Registry" })),
+  ];
 
-    const q = query.toLowerCase().trim();
-    if (!q) return combined;
+  const q = query.toLowerCase().trim();
 
-    return combined.filter((item) => textOf(item).includes(q));
-  }, [query]);
+  if (!q) return combined;
+
+  return combined.filter((item) => textOf(item).includes(q));
+}, [query]);
 
   const activeItem = selected || allResults[0] || null;
 
@@ -83,6 +84,7 @@ export default function Page() {
         records: [],
         routes: [],
         sources: [],
+        registries: database.registries,
       };
     }
 
@@ -92,6 +94,7 @@ export default function Page() {
     const records = new Set<any>();
     const routes = new Set<any>();
     const sources = new Set<any>();
+    const registries = new Set<any>();
 
     if (activeItem.category === "Person") {
       people.add(activeItem);
@@ -181,8 +184,10 @@ export default function Page() {
       records: Array.from(records),
       routes: Array.from(routes),
       sources: Array.from(sources),
-    };
-  }, [activeItem]);
+      registries: Array.from(registries)
+}, 
+
+[activeItem]);
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -334,6 +339,7 @@ function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
       <TrailList title="Linked Records" items={trail.records} />
       <TrailList title="Linked Routes" items={trail.routes} />
       <TrailList title="Linked Sources" items={trail.sources} />
+      <TrailList title="Linked Registries" items={trail.registries} />
     </aside>
   );
 }
