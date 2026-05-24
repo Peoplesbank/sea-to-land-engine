@@ -5,8 +5,8 @@
     "category": "Land Title Database",
     "region": "Saskatchewan, Canada",
     "type": "Government / land title source",
-    "url": "",
-    "status": "Link needed",
+    "url": "https://www.saskregistries.ca/landtitles",
+    "status": "Official link added",
     "use": "Search for land grants, patents, title chains, and parcel evidence."
   },
   {
@@ -15,8 +15,8 @@
     "category": "National Archive",
     "region": "Canada",
     "type": "Archive catalog",
-    "url": "",
-    "status": "Link needed",
+    "url": "https://recherche-collection-search.bac-lac.gc.ca/",
+    "status": "Official link added",
     "use": "Search census, immigration, military, land, and national archive records."
   },
   {
@@ -25,8 +25,8 @@
     "category": "Genealogy Database",
     "region": "International",
     "type": "Genealogy archive",
-    "url": "",
-    "status": "Link needed",
+    "url": "https://www.familysearch.org/en/search/",
+    "status": "Official link added",
     "use": "Search family trees, indexed records, census, church, probate, and vital records."
   },
   {
@@ -35,8 +35,8 @@
     "category": "Genealogy Collaboration",
     "region": "International",
     "type": "Collaborative genealogy site",
-    "url": "",
-    "status": "Link needed",
+    "url": "https://www.wikitree.com/",
+    "status": "Official link added",
     "use": "Compare public genealogy profiles and source trails."
   },
   {
@@ -45,9 +45,9 @@
     "category": "Newspapers",
     "region": "Canada / United States / International",
     "type": "Newspaper archive",
-    "url": "",
-    "status": "Link needed",
-    "use": "Search obituaries, land notices, court notices, family events, and public announcements."
+    "url": "https://www.canadiana.ca/",
+    "status": "Research link added",
+    "use": "Search obituaries, land notices, court notices, family events, public announcements, books, periodicals, maps, and archival collections."
   },
   {
     "id": "government-records",
@@ -55,8 +55,8 @@
     "category": "Government Registry",
     "region": "Canada / United States / United Kingdom / Europe",
     "type": "Official record source",
-    "url": "",
-    "status": "Link needed",
-    "use": "Search official public records, vital records, court records, land records, and legal notices."
+    "url": "https://www.canada.ca/en/library-archives.html",
+    "status": "Official link added",
+    "use": "Search official public records, vital records, court records, land records, immigration records, military files, and legal notices."
   }
 ]
