@@ -184,10 +184,9 @@ export default function Page() {
       records: Array.from(records),
       routes: Array.from(routes),
       sources: Array.from(sources),
-      registries: Array.from(registries)
-}, 
-
-[activeItem]);
+      registries: Array.from(registries),
+    };
+  }, [activeItem]);
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
