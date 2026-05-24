@@ -313,21 +313,32 @@ function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {database.registries.map((registry) => (
               <div
-                key={registry.id}
-                className="rounded-2xl border border-white/10 bg-slate-950 p-5"
-              >
-                <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
-                  {registry.category}
-                </div>
+  key={registry.id}
+  className="rounded-2xl border border-white/10 bg-slate-950 p-5"
+>
+  <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
+    {registry.category}
+  </div>
 
-                <h3 className="mt-2 text-lg font-bold">{registry.name}</h3>
+  <h3 className="mt-2 text-lg font-bold">{registry.name}</h3>
 
-                <p className="mt-2 text-sm text-slate-300">{registry.use}</p>
+  <p className="mt-2 text-sm text-slate-300">{registry.use}</p>
 
-                <p className="mt-3 text-sm text-amber-300">
-                  Status: {registry.status}
-                </p>
-              </div>
+  <p className="mt-3 text-sm text-amber-300">
+    Status: {registry.status}
+  </p>
+
+  {registry.url && (
+    <a
+      href={registry.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-4 inline-block rounded-xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm font-bold text-cyan-200 hover:bg-cyan-400/20"
+    >
+      Open Registry
+    </a>
+  )}
+</div>
             ))}
           </div>
         </section>
