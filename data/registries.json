@@ -1,0 +1,62 @@
+[
+  {
+    "id": "saskatchewan-land-records",
+    "name": "Saskatchewan Land Records / Land Titles",
+    "category": "Land Title Database",
+    "region": "Saskatchewan, Canada",
+    "type": "Government / land title source",
+    "url": "",
+    "status": "Link needed",
+    "use": "Search for land grants, patents, title chains, and parcel evidence."
+  },
+  {
+    "id": "library-and-archives-canada",
+    "name": "Library and Archives Canada",
+    "category": "National Archive",
+    "region": "Canada",
+    "type": "Archive catalog",
+    "url": "",
+    "status": "Link needed",
+    "use": "Search census, immigration, military, land, and national archive records."
+  },
+  {
+    "id": "familysearch",
+    "name": "FamilySearch",
+    "category": "Genealogy Database",
+    "region": "International",
+    "type": "Genealogy archive",
+    "url": "",
+    "status": "Link needed",
+    "use": "Search family trees, indexed records, census, church, probate, and vital records."
+  },
+  {
+    "id": "wikitree",
+    "name": "WikiTree",
+    "category": "Genealogy Collaboration",
+    "region": "International",
+    "type": "Collaborative genealogy site",
+    "url": "",
+    "status": "Link needed",
+    "use": "Compare public genealogy profiles and source trails."
+  },
+  {
+    "id": "newspapers",
+    "name": "Historical Newspapers",
+    "category": "Newspapers",
+    "region": "Canada / United States / International",
+    "type": "Newspaper archive",
+    "url": "",
+    "status": "Link needed",
+    "use": "Search obituaries, land notices, court notices, family events, and public announcements."
+  },
+  {
+    "id": "government-records",
+    "name": "Government Records",
+    "category": "Government Registry",
+    "region": "Canada / United States / United Kingdom / Europe",
+    "type": "Official record source",
+    "url": "",
+    "status": "Link needed",
+    "use": "Search official public records, vital records, court records, land records, and legal notices."
+  }
+]
