@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "saskatchewan-land-grants",
+    "title": "William Charles Benson LeRoy Myers — Saskatchewan Land Grants",
+    "type": "Land grant record group",
+    "people": ["william-charles-benson-leroy-myers"],
+    "places": ["saskatchewan"],
+    "parcels": ["se-27-06-01-3", "sw-27-06-01-3"],
+    "status": "Needs original source image and citation"
+  }
+]

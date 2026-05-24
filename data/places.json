@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "saskatchewan",
+    "name": "Saskatchewan",
+    "type": "Land grant region",
+    "status": "Active research location",
+    "notes": "Target region for William Charles Benson LeRoy Myers land grants."
+  },
+  {
+    "id": "vancouver-burnaby",
+    "name": "Vancouver / Burnaby, British Columbia",
+    "type": "Modern family anchor",
+    "status": "Living memory location",
+    "notes": "Modern Sea-to-Land Engine anchor location."
+  },
+  {
+    "id": "new-amsterdam",
+    "name": "New Amsterdam / New Netherland",
+    "type": "Colonial port and migration point",
+    "status": "Historical route target",
+    "notes": "Key Dutch colonial sea-to-land landing point."
+  }
+]

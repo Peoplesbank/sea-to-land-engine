@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": "se-27-06-01-3",
+    "legal": "SE 27-06-01-3",
+    "type": "Saskatchewan land parcel",
+    "person": "william-charles-benson-leroy-myers",
+    "status": "Evidence target"
+  },
+  {
+    "id": "sw-27-06-01-3",
+    "legal": "SW 27-06-01-3",
+    "type": "Saskatchewan land parcel",
+    "person": "william-charles-benson-leroy-myers",
+    "status": "Evidence target"
+  }
+]

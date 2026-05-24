@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "holland-to-vancouver-route",
+    "name": "Holland to Vancouver Sea-to-Land Route",
+    "type": "Migration route",
+    "path": ["Holland", "New Amsterdam", "New Jersey", "Ontario", "Saskatchewan", "Vancouver / Burnaby"],
+    "status": "Framework route requiring source-linked proof"
+  }
+]

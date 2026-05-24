@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": "source-target-saskatchewan-land-title",
+    "name": "Saskatchewan land title / patent search",
+    "type": "Source target",
+    "repository": "Saskatchewan land records / homestead files",
+    "status": "To be obtained"
+  }
+]
