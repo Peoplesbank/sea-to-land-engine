@@ -1,4 +1,21 @@
-"use client";
+
+
+
+import peopleData from "@/data/people.json";
+import placesData from "@/data/places.json";
+import recordsData from "@/data/records.json";
+import parcelsData from "@/data/parcels.json";
+import routesData from "@/data/routes.json";
+import sourcesData from "@/data/sources.json";"use client";
+
+const database = {
+  people: peopleData,
+  places: placesData,
+  records: recordsData,
+  parcels: parcelsData,
+  routes: routesData,
+  sources: sourcesData,
+};
 
 import React, { useState } from "react";
 import { Search, Waves } from "lucide-react";
