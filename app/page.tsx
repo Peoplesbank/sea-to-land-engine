@@ -54,24 +54,44 @@ function findById(list: any[], id: string) {
 export default function Page() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<SearchItem | null>(null);
+  const [mode, setMode] = useState<"archive" | "public" | "restore">("archive");
 
- const allResults = useMemo(() => {
-  const combined: SearchItem[] = [
-    ...database.people.map((item) => ({ ...item, category: "Person" })),
-    ...database.places.map((item) => ({ ...item, category: "Place" })),
-    ...database.records.map((item) => ({ ...item, category: "Record" })),
-    ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
-    ...database.routes.map((item) => ({ ...item, category: "Route" })),
-    ...database.sources.map((item) => ({ ...item, category: "Source" })),
-    ...database.registries.map((item) => ({ ...item, category: "Registry" })),
-  ];
+  const allResults = useMemo(() => {
+    const archiveResults: SearchItem[] = [
+      ...database.people.map((item) => ({ ...item, category: "Person" })),
+      ...database.places.map((item) => ({ ...item, category: "Place" })),
+      ...database.records.map((item) => ({ ...item, category: "Record" })),
+      ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
+      ...database.routes.map((item) => ({ ...item, category: "Route" })),
+      ...database.sources.map((item) => ({ ...item, category: "Source" })),
+    ];
 
-  const q = query.toLowerCase().trim();
+    const publicResults: SearchItem[] = [
+      ...database.registries.map((item) => ({ ...item, category: "Registry" })),
+    ];
 
-  if (!q) return combined;
+    const restoreResults: SearchItem[] = [
+      ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
+      ...database.routes.map((item) => ({ ...item, category: "Route" })),
+      ...database.records
+        .filter((item) => JSON.stringify(item).toLowerCase().includes("land"))
+        .map((item) => ({ ...item, category: "Record" })),
+      ...database.sources.map((item) => ({ ...item, category: "Source" })),
+    ];
 
-  return combined.filter((item) => textOf(item).includes(q));
-}, [query]);
+    const combined =
+      mode === "archive"
+        ? archiveResults
+        : mode === "public"
+        ? publicResults
+        : restoreResults;
+
+    const q = query.toLowerCase().trim();
+
+    if (!q) return combined;
+
+    return combined.filter((item) => textOf(item).includes(q));
+  }, [query, mode]);
 
   const activeItem = selected || allResults[0] || null;
 
@@ -283,7 +303,14 @@ export default function Page() {
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
-  <div className="rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-5">
+  <button
+    onClick={() => setMode("archive")}
+    className={`rounded-2xl border p-5 text-left transition ${
+      mode === "archive"
+        ? "border-cyan-300 bg-cyan-400/20"
+        : "border-cyan-400/30 bg-cyan-400/10 hover:bg-cyan-400/15"
+    }`}
+  >
     <div className="text-sm font-bold uppercase tracking-widest text-cyan-300">
       My Archive Only
     </div>
@@ -292,9 +319,16 @@ export default function Page() {
       People, places, records, parcels, routes, sources, and proof status already
       inside your Engine.
     </p>
-  </div>
+  </button>
 
-  <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5">
+  <button
+    onClick={() => setMode("public")}
+    className={`rounded-2xl border p-5 text-left transition ${
+      mode === "public"
+        ? "border-amber-300 bg-amber-400/20"
+        : "border-amber-400/30 bg-amber-400/10 hover:bg-amber-400/15"
+    }`}
+  >
     <div className="text-sm font-bold uppercase tracking-widest text-amber-300">
       Public Research Waters
     </div>
@@ -303,9 +337,16 @@ export default function Page() {
       Land titles, government records, archives, newspapers, FamilySearch,
       WikiTree, and official research doors.
     </p>
-  </div>
+  </button>
 
-  <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-5">
+  <button
+    onClick={() => setMode("restore")}
+    className={`rounded-2xl border p-5 text-left transition ${
+      mode === "restore"
+        ? "border-emerald-300 bg-emerald-400/20"
+        : "border-emerald-400/30 bg-emerald-400/10 hover:bg-emerald-400/15"
+    }`}
+  >
     <div className="text-sm font-bold uppercase tracking-widest text-emerald-300">
       Restore the Land
     </div>
@@ -314,7 +355,7 @@ export default function Page() {
       Connect memory, land parcels, migration routes, and sources into a living
       restoration archive.
     </p>
-  </div>
+  </button>
 </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
