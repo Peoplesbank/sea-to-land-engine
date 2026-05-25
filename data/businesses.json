@@ -1,0 +1,15 @@
+[
+  {
+    "id": "example-friend-business",
+    "name": "Friend Business Name",
+    "owner": "Friend Name",
+    "category": "Services",
+    "location": "Canada",
+    "description": "Short description of the business or service.",
+    "website": "https://example.com",
+    "email": "",
+    "phone": "",
+    "status": "Friend Submitted",
+    "offer": "Special offer or sale information here."
+  }
+]
