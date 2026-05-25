@@ -368,6 +368,48 @@ export default function Page() {
           <Stat icon={<Archive />} label="Registries" value={database.registries.length} />
 </div>
 
+<section className="mt-8 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-6">
+  <h2 className="text-2xl font-bold text-amber-200">
+    Proof Level Legend
+  </h2>
+
+  <p className="mt-2 text-sm text-slate-300">
+    These badges separate embedded facts, source targets, public leads, family tradition,
+    and story layers so the Engine keeps truth, research, and restoration clearly marked.
+  </p>
+
+  <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+    <ProofBadge
+      label="Evidence Target"
+      text="Known item in the Engine that still needs original records, images, or citations."
+    />
+    <ProofBadge
+      label="Needs Source"
+      text="A lead or claim that should not be treated as proven until a source is attached."
+    />
+    <ProofBadge
+      label="Official Link Added"
+      text="A registry, archive, or public research doorway has been connected."
+    />
+    <ProofBadge
+      label="Likely"
+      text="A probable connection supported by clues, but not yet fully proven."
+    />
+    <ProofBadge
+      label="Proven"
+      text="A source-backed fact with clear evidence attached."
+    />
+    <ProofBadge
+      label="Family Tradition"
+      text="A passed-down story or family memory, preserved but marked separately from proof."
+    />
+    <ProofBadge
+      label="Story Layer"
+      text="Creative, symbolic, royal, or fictional presentation layer, not a factual proof claim."
+    />
+  </div>
+</section>
+
         <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_420px]">
           <section>
             <h2 className="text-2xl font-bold">Search Results</h2>
@@ -497,20 +539,13 @@ function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
   );
 }
 
-function TrailList({ title, items }: { title: string; items: any[] }) {
+function ProofBadge({ label, text }: { label: string; text: string }) {
   return (
-    <div className="mt-5 rounded-xl border border-white/10 bg-slate-950 p-4">
-      <div className="font-semibold text-cyan-300">{title}</div>
-
-      {items.length ? (
-        <ul className="mt-3 space-y-2 text-sm text-slate-300">
-          {items.map((item, index) => (
-            <li key={item.id || index}>• {item.name || item.title || item.legal || item.id}</li>
-          ))}
-        </ul>
-      ) : (
-        <p className="mt-2 text-sm text-slate-500">No links yet.</p>
-      )}
+    <div className="rounded-xl border border-white/10 bg-slate-950 p-4">
+      <span className="inline-block rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-200">
+        {label}
+      </span>
+      <p className="mt-3 text-sm text-slate-300">{text}</p>
     </div>
   );
 }
