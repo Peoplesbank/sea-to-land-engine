@@ -189,7 +189,55 @@ export default function Page() {
   }, [activeItem]);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+  <div className="pointer-events-none fixed inset-0 -z-10">
+    <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-cyan-950 to-emerald-950" />
+
+    <div className="absolute left-1/2 top-[-120px] h-[620px] w-[1000px] -translate-x-1/2 rounded-full bg-cyan-400/15 blur-3xl" />
+
+    <div className="absolute bottom-[-120px] right-[-120px] h-[520px] w-[720px] rounded-full bg-amber-400/15 blur-3xl" />
+
+    <div className="absolute bottom-[-80px] left-[-80px] h-[420px] w-[620px] rounded-full bg-emerald-400/12 blur-3xl" />
+
+    <div
+      className="absolute inset-0 opacity-[0.07]"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(255,255,255,.20) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.20) 1px, transparent 1px)",
+        backgroundSize: "44px 44px",
+      }}
+    />
+
+    <svg
+      className="absolute inset-0 h-full w-full opacity-30"
+      viewBox="0 0 1200 900"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M0 300 C 180 220, 260 390, 440 310 S 760 210, 960 330 S 1130 420, 1200 330"
+        fill="none"
+        stroke="rgba(34,211,238,0.35)"
+        strokeWidth="3"
+        strokeDasharray="12 14"
+      />
+      <path
+        d="M0 520 C 220 430, 360 610, 560 520 S 850 420, 1200 560"
+        fill="none"
+        stroke="rgba(251,191,36,0.28)"
+        strokeWidth="2"
+        strokeDasharray="8 18"
+      />
+      <path
+        d="M100 760 C 300 660, 520 780, 720 700 S 980 620, 1160 740"
+        fill="none"
+        stroke="rgba(52,211,153,0.24)"
+        strokeWidth="2"
+        strokeDasharray="10 16"
+      />
+    </svg>
+
+    <div className="absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent" />
+  </div>
       <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="rounded-3xl border border-cyan-400/30 bg-slate-900 p-8 shadow-2xl">
           <div className="flex items-center gap-3 text-cyan-300">
@@ -199,9 +247,24 @@ export default function Page() {
             </span>
           </div>
 
-          <h1 className="mt-5 text-4xl font-bold md:text-6xl">
-            A Search Engine for Memory
-          </h1>
+          <div className="mt-5 inline-flex rounded-full border border-amber-400/40 bg-amber-400/10 px-4 py-2 text-sm font-bold uppercase tracking-widest text-amber-200">
+  Sea King Engine • King of Water • Restoration Archive
+</div>
+
+<h1 className="mt-5 text-4xl font-bold md:text-6xl">
+  The Sea Remembers. The Land Records. The Engine Restores.
+</h1>
+
+<p className="mt-4 max-w-3xl text-slate-300">
+  A Sea-to-Land historical research engine for memory, genealogy, land titles,
+  migration routes, proof trails, public registries, and restoring the land back
+  through truth, records, and living history.
+</p>
+
+<p className="mt-4 max-w-3xl text-lg font-semibold text-amber-200">
+  From the King of Water to the memory of the land — restoring what was lost,
+  proving what remains, and building the archive for future generations.
+</p>
 
           <p className="mt-4 max-w-3xl text-slate-300">
             Search people, places, land parcels, records, routes, sources,
@@ -220,14 +283,49 @@ export default function Page() {
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
+  <div className="rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-5">
+    <div className="text-sm font-bold uppercase tracking-widest text-cyan-300">
+      My Archive Only
+    </div>
+    <h3 className="mt-2 text-xl font-bold">Embedded Facts</h3>
+    <p className="mt-2 text-sm text-slate-300">
+      People, places, records, parcels, routes, sources, and proof status already
+      inside your Engine.
+    </p>
+  </div>
+
+  <div className="rounded-2xl border border-amber-400/30 bg-amber-400/10 p-5">
+    <div className="text-sm font-bold uppercase tracking-widest text-amber-300">
+      Public Research Waters
+    </div>
+    <h3 className="mt-2 text-xl font-bold">Outside Registries</h3>
+    <p className="mt-2 text-sm text-slate-300">
+      Land titles, government records, archives, newspapers, FamilySearch,
+      WikiTree, and official research doors.
+    </p>
+  </div>
+
+  <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-5">
+    <div className="text-sm font-bold uppercase tracking-widest text-emerald-300">
+      Restore the Land
+    </div>
+    <h3 className="mt-2 text-xl font-bold">Proof to Restoration</h3>
+    <p className="mt-2 text-sm text-slate-300">
+      Connect memory, land parcels, migration routes, and sources into a living
+      restoration archive.
+    </p>
+  </div>
+</div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
           <Stat icon={<Users />} label="People" value={database.people.length} />
           <Stat icon={<Map />} label="Places" value={database.places.length} />
           <Stat icon={<FileText />} label="Records" value={database.records.length} />
           <Stat icon={<Database />} label="Parcels" value={database.parcels.length} />
           <Stat icon={<Route />} label="Routes" value={database.routes.length} />
           <Stat icon={<Archive />} label="Sources" value={database.sources.length} />
-        </div>
-	<Stat icon={<Archive />} label="Registries" value={database.registries.length} />
+          <Stat icon={<Archive />} label="Registries" value={database.registries.length} />
+</div>
 
         <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_420px]">
           <section>
