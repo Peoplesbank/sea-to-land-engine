@@ -7,7 +7,8 @@ import recordsData from "@/data/records.json";
 import parcelsData from "@/data/parcels.json";
 import routesData from "@/data/routes.json";
 import sourcesData from "@/data/sources.json";
-import registriesData from "@/data/registries.json"; 
+import registriesData from "@/data/registries.json";
+import businessesData from "@/data/businesses.json";
 
 import {
   Search,
@@ -29,6 +30,7 @@ const database = {
   routes: routesData as any[],
   sources: sourcesData as any[],
   registries: registriesData as any[],
+  businesses: businessesData as any[],
 };
 
 type SearchItem = any & {
@@ -54,44 +56,50 @@ function findById(list: any[], id: string) {
 export default function Page() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<SearchItem | null>(null);
-  const [mode, setMode] = useState<"archive" | "public" | "restore">("archive");
+  const [mode, setMode] = useState<"archive" | "public" | "restore" | "market">("archive");
 
-  const allResults = useMemo(() => {
-    const archiveResults: SearchItem[] = [
-      ...database.people.map((item) => ({ ...item, category: "Person" })),
-      ...database.places.map((item) => ({ ...item, category: "Place" })),
-      ...database.records.map((item) => ({ ...item, category: "Record" })),
-      ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
-      ...database.routes.map((item) => ({ ...item, category: "Route" })),
-      ...database.sources.map((item) => ({ ...item, category: "Source" })),
-    ];
+const allResults = useMemo(() => {
+  const archiveResults: SearchItem[] = [
+    ...database.people.map((item) => ({ ...item, category: "Person" })),
+    ...database.places.map((item) => ({ ...item, category: "Place" })),
+    ...database.records.map((item) => ({ ...item, category: "Record" })),
+    ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
+    ...database.routes.map((item) => ({ ...item, category: "Route" })),
+    ...database.sources.map((item) => ({ ...item, category: "Source" })),
+  ];
 
-    const publicResults: SearchItem[] = [
-      ...database.registries.map((item) => ({ ...item, category: "Registry" })),
-    ];
+  const publicResults: SearchItem[] = [
+    ...database.registries.map((item) => ({ ...item, category: "Registry" })),
+  ];
 
-    const restoreResults: SearchItem[] = [
-      ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
-      ...database.routes.map((item) => ({ ...item, category: "Route" })),
-      ...database.records
-        .filter((item) => JSON.stringify(item).toLowerCase().includes("land"))
-        .map((item) => ({ ...item, category: "Record" })),
-      ...database.sources.map((item) => ({ ...item, category: "Source" })),
-    ];
+  const restoreResults: SearchItem[] = [
+    ...database.parcels.map((item) => ({ ...item, category: "Parcel" })),
+    ...database.routes.map((item) => ({ ...item, category: "Route" })),
+    ...database.records
+      .filter((item) => JSON.stringify(item).toLowerCase().includes("land"))
+      .map((item) => ({ ...item, category: "Record" })),
+    ...database.sources.map((item) => ({ ...item, category: "Source" })),
+  ];
 
-    const combined =
-      mode === "archive"
-        ? archiveResults
-        : mode === "public"
-        ? publicResults
-        : restoreResults;
+  const marketResults: SearchItem[] = [
+    ...database.businesses.map((item) => ({ ...item, category: "Business" })),
+  ];
 
-    const q = query.toLowerCase().trim();
+  const combined =
+    mode === "archive"
+      ? archiveResults
+      : mode === "public"
+      ? publicResults
+      : mode === "restore"
+      ? restoreResults
+      : marketResults;
 
-    if (!q) return combined;
+  const q = query.toLowerCase().trim();
 
-    return combined.filter((item) => textOf(item).includes(q));
-  }, [query, mode]);
+  if (!q) return combined;
+
+  return combined.filter((item) => textOf(item).includes(q));
+}, [query, mode]);
 
   const activeItem = selected || allResults[0] || null;
 
@@ -302,7 +310,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-4 md:grid-cols-4">
   <button
     onClick={() => setMode("archive")}
     className={`rounded-2xl border p-5 text-left transition ${
@@ -316,8 +324,7 @@ export default function Page() {
     </div>
     <h3 className="mt-2 text-xl font-bold">Embedded Facts</h3>
     <p className="mt-2 text-sm text-slate-300">
-      People, places, records, parcels, routes, sources, and proof status already
-      inside your Engine.
+      People, places, records, parcels, routes, sources, and proof status already inside your Engine.
     </p>
   </button>
 
@@ -334,8 +341,7 @@ export default function Page() {
     </div>
     <h3 className="mt-2 text-xl font-bold">Outside Registries</h3>
     <p className="mt-2 text-sm text-slate-300">
-      Land titles, government records, archives, newspapers, FamilySearch,
-      WikiTree, and official research doors.
+      Land titles, government records, archives, newspapers, FamilySearch, WikiTree, and official research doors.
     </p>
   </button>
 
@@ -352,8 +358,24 @@ export default function Page() {
     </div>
     <h3 className="mt-2 text-xl font-bold">Proof to Restoration</h3>
     <p className="mt-2 text-sm text-slate-300">
-      Connect memory, land parcels, migration routes, and sources into a living
-      restoration archive.
+      Connect memory, land parcels, migration routes, and sources into a living restoration archive.
+    </p>
+  </button>
+
+  <button
+    onClick={() => setMode("market")}
+    className={`rounded-2xl border p-5 text-left transition ${
+      mode === "market"
+        ? "border-purple-300 bg-purple-400/20"
+        : "border-purple-400/30 bg-purple-400/10 hover:bg-purple-400/15"
+    }`}
+  >
+    <div className="text-sm font-bold uppercase tracking-widest text-purple-300">
+      Community Market
+    </div>
+    <h3 className="mt-2 text-xl font-bold">Friends Directory</h3>
+    <p className="mt-2 text-sm text-slate-300">
+      Friend-submitted businesses, services, sales links, partners, and project supporters.
     </p>
   </button>
 </div>
@@ -366,6 +388,7 @@ export default function Page() {
           <Stat icon={<Route />} label="Routes" value={database.routes.length} />
           <Stat icon={<Archive />} label="Sources" value={database.sources.length} />
           <Stat icon={<Archive />} label="Registries" value={database.registries.length} />
+          <Stat icon={<Users />} label="Businesses" value={database.businesses.length} />
 </div>
 
 <section className="mt-8 rounded-2xl border border-amber-400/30 bg-amber-400/10 p-6">
