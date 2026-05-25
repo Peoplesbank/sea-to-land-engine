@@ -5,8 +5,8 @@
     "category": "Land Title Database",
     "region": "Saskatchewan, Canada",
     "type": "Government / land title source",
-    "url": "https://www.saskregistries.ca/landtitles",
-    "status": "Official link added",
+    "url": "",
+    "status": "Link needed",
     "use": "Search for land grants, patents, title chains, and parcel evidence."
   },
   {
@@ -15,8 +15,8 @@
     "category": "National Archive",
     "region": "Canada",
     "type": "Archive catalog",
-    "url": "https://recherche-collection-search.bac-lac.gc.ca/",
-    "status": "Official link added",
+    "url": "",
+    "status": "Link needed",
     "use": "Search census, immigration, military, land, and national archive records."
   },
   {
@@ -25,8 +25,8 @@
     "category": "Genealogy Database",
     "region": "International",
     "type": "Genealogy archive",
-    "url": "https://www.familysearch.org/en/search/",
-    "status": "Official link added",
+    "url": "",
+    "status": "Link needed",
     "use": "Search family trees, indexed records, census, church, probate, and vital records."
   },
   {
@@ -35,8 +35,8 @@
     "category": "Genealogy Collaboration",
     "region": "International",
     "type": "Collaborative genealogy site",
-    "url": "https://www.wikitree.com/",
-    "status": "Official link added",
+    "url": "",
+    "status": "Link needed",
     "use": "Compare public genealogy profiles and source trails."
   },
   {
@@ -45,11 +45,11 @@
     "category": "Newspapers",
     "region": "Canada / United States / International",
     "type": "Newspaper archive",
-    "url": "https://www.canadiana.ca/",
-    "status": "Research link added",
-    "use": "Search obituaries, land notices, court notices, family events, public announcements, books, periodicals, maps, and archival collections."
+    "url": "",
+    "status": "Link needed",
+    "use": "Search obituaries, land notices, court notices, family events, and public announcements."
   },
-  {
+    {
     "id": "government-records",
     "name": "Government Records",
     "category": "Government Registry",
@@ -58,5 +58,15 @@
     "url": "https://www.canada.ca/en/library-archives.html",
     "status": "Official link added",
     "use": "Search official public records, vital records, court records, land records, immigration records, military files, and legal notices."
+  },
+  {
+    "id": "friend-developer-vercel",
+    "name": "Friend Developer / Vercel Project",
+    "category": "Developer Link",
+    "region": "Project Support",
+    "type": "Developer / deployment reference",
+    "url": "http://vercel.com/dc1-420007",
+    "status": "Developer link added",
+    "use": "Developer support link connected to the Sea-to-Land Engine project."
   }
 ]
