@@ -384,17 +384,21 @@ export default function Page() {
                   }`}
                 >
                   <div className="text-xs font-bold uppercase tracking-widest text-cyan-300">
-                    {item.category}
-                  </div>
+  {item.category}
+</div>
 
-                  <h3 className="mt-2 text-xl font-bold">{titleOf(item)}</h3>
+<h3 className="mt-2 text-xl font-bold">{titleOf(item)}</h3>
 
-                  <p className="mt-2 text-slate-300">{item.type || item.notes || statusOf(item)}</p>
+<p className="mt-2 text-slate-300">
+  {item.type || item.notes || statusOf(item)}
+</p>
 
-                  {item.status && (
-                    <p className="mt-3 text-sm text-amber-300">Status: {item.status}</p>
-                  )}
-                </button>
+{item.status && (
+  <span className="mt-3 inline-block rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-200">
+    {item.status}
+  </span>
+)}
+</button>
               ))}
 
               {allResults.length === 0 && (
@@ -433,10 +437,10 @@ function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
       <p className="mt-2 text-sm text-slate-300">{statusOf(item)}</p>
 
       {item.status && (
-        <div className="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-3 text-sm text-amber-200">
-          Proof Status: {item.status}
-        </div>
-      )}
+  <div className="mt-4 rounded-xl border border-amber-400/40 bg-amber-400/10 p-3 text-sm font-bold text-amber-200">
+    Proof Status: {item.status}
+  </div>
+)}
        
       <section className="mt-10 rounded-2xl border border-cyan-400/30 bg-slate-900 p-6">
           <h2 className="text-2xl font-bold text-cyan-300">
