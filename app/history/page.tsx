@@ -5,6 +5,7 @@ import parcelsData from "@/data/parcels.json";
 import routesData from "@/data/routes.json";
 import sourcesData from "@/data/sources.json";
 import registriesData from "@/data/registries.json";
+import businessesData from "@/data/businesses.json";
 
 const database = {
   people: peopleData as any[],
@@ -14,6 +15,7 @@ const database = {
   routes: routesData as any[],
   sources: sourcesData as any[],
   registries: registriesData as any[],
+  businesses: businessesData as any[],
 };
 
 export default function HistoryPage() {
