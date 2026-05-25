@@ -539,6 +539,26 @@ function ProofTrail({ item, trail }: { item: SearchItem | null; trail: any }) {
   );
 }
 
+function TrailList({ title, items }: { title: string; items: any[] }) {
+  return (
+    <div className="mt-5 rounded-xl border border-white/10 bg-slate-950 p-4">
+      <div className="font-semibold text-cyan-300">{title}</div>
+
+      {items.length ? (
+        <ul className="mt-3 space-y-2 text-sm text-slate-300">
+          {items.map((item, index) => (
+            <li key={item.id || index}>
+              • {item.name || item.title || item.legal || item.id}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-2 text-sm text-slate-500">No links yet.</p>
+      )}
+    </div>
+  );
+}
+
 function ProofBadge({ label, text }: { label: string; text: string }) {
   return (
     <div className="rounded-xl border border-white/10 bg-slate-950 p-4">
