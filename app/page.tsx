@@ -357,7 +357,7 @@ export default function Page() {
 <div className="mt-8 overflow-hidden rounded-3xl border border-cyan-400/30 bg-slate-950 shadow-2xl">
   
 <img
-    src="/sea-king-vision.png"
+    src="/sea-king-vision2.png"
     alt="Sea King vision inside the Sea-to-Land Engine"
     className="h-auto w-full"
   />
