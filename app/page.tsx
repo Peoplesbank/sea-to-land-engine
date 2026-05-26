@@ -354,6 +354,47 @@ export default function Page() {
           </div>
         </div>
 
+<div className="mt-8 overflow-hidden rounded-3xl border border-cyan-400/30 bg-slate-950 shadow-2xl">
+  
+<img
+    src="/sea-king-vision.png"
+    alt="Sea King vision inside the Sea-to-Land Engine"
+    className="h-auto w-full"
+  />
+
+  <div className="border-t border-cyan-400/20 bg-slate-900 p-6">
+    <div className="text-sm font-bold uppercase tracking-widest text-cyan-300">
+      Sea King Vision Inside the Engine
+    </div>
+
+    <h2 className="mt-3 text-3xl font-bold">
+      Enter the Engine Through Water, Memory, and Restoration
+    </h2>
+
+    <p className="mt-3 max-w-4xl text-slate-300">
+      The Sea remembers. The Land records. The Engine restores. This image marks
+      the symbolic entrance into the Sea-to-Land Engine: water, dolphins, memory,
+      proof trails, land records, and restoration.
+    </p>
+
+    <div className="mt-5 flex flex-wrap gap-3">
+      <a
+        href="/vision"
+        className="rounded-xl border border-cyan-400/40 bg-cyan-400/10 px-5 py-3 text-sm font-bold uppercase tracking-widest text-cyan-200 hover:bg-cyan-400/20"
+      >
+        Open Full Vision Page
+      </a>
+
+      <a
+        href="/cover"
+        className="rounded-xl border border-amber-400/40 bg-amber-400/10 px-5 py-3 text-sm font-bold uppercase tracking-widest text-amber-200 hover:bg-amber-400/20"
+      >
+        Open House of Memory Cover
+      </a>
+    </div>
+  </div>
+</div>
+
         <div className="mt-8 grid gap-4 md:grid-cols-4">
           <button
             onClick={() => setMode("archive")}
